@@ -1,59 +1,63 @@
 
-import 'bootstrap/dist/css/bootstrap.min.css'
-import React, { StrictMode } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css'; // Importamos Bootstrap
+import React, { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import Header from "./layout/hearder";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+
+// Importamos los componentes
+import Header from "./layout/hearder"; // Corregido el nombre de Hearder a Header
 import Carrusel from "./layout/carrusel";
 import Aside from "./layout/aside";
 import Footer from "./layout/footer";
-import Main from "./layout/main";
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Single from "./single";
 import Basic from "./layout/basic";
+import Single from "./single";
 
+// Feather icons
 const feather = require('feather-icons');
-setTimeout(() => {
-  feather.replace();
-}, 1000);
 
+// Definimos el componente de Layout para el contenido general
+const Layout = () => {
+  useEffect(() => {
+    feather.replace();
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <div className="container">
+        <Outlet /> {/* Esto renderiza los elementos hijos definidos en las rutas */}
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+// Definimos las rutas
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Basic />,
+    element: <Layout />, // Usamos el layout que incluye el header y footer
     children: [
       {
         path: '',
-        element: <>
-          <div className="conteiner">
-            <div className="row">
-              <div className="col-md-7 ">
-                
-                
-              </div>
-              <div className="col-md-5">
-                
-              </div>
-            </div>
-          </div>
-        </>
+        element: (
+          <>
+            <Basic /> {/* Renderizamos el contenido de Basic en la página de inicio */}
+          </>
+        ),
       },
-
       {
         path: "/detalle/:slug",
-        element: <Single />,
+        element: <Single />, // Página para los detalles
       },
     ],
   },
 ]);
 
-
-
+// Renderizamos la aplicación en el root
 const root = createRoot(document.getElementById("root"));
 root.render(
-  <RouterProvider router={router} />
-
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
 );
