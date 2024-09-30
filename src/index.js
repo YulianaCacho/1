@@ -31,11 +31,11 @@ const router = createBrowserRouter([
           <div className="conteiner">
             <div className="row">
               <div className="col-md-7 ">
-                <Carrusel></Carrusel>
-                <Main></Main>
+                
+                
               </div>
               <div className="col-md-5">
-                <Aside></Aside>
+                
               </div>
             </div>
           </div>
